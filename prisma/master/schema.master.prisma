@@ -9,21 +9,21 @@ datasource db {
 }
 
 model Tenants {
-  tenantId String   @id @default(uuid())
-  cnpj     String   @unique
-  email    String   @unique
-  sufixo   String   @unique
-  dbName   String   @unique
-  slug     String   @unique
-  ativo    Boolean? @default(true)
+  tenantId String  @id @default(uuid())
+  cnpj     String  @unique
+  email    String  @unique
+  telefone String?
+  dbName   String  @unique
+  slug     String  @unique
+  ativo    Boolean @default(true)
 
-  usuarios_redirect Usuarios_Redirect[]
+  clientes_redirect Clientes_Redirect[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
 }
 
-model Usuarios_Redirect {
+model Clientes_Redirect {
   userId Int    @id @default(autoincrement())
   email  String @unique
 

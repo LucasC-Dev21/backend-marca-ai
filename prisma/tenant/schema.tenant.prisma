@@ -7,6 +7,97 @@ datasource db {
   provider = "postgresql"
 }
 
+model DadosEmpresa {
+  id           Int    @id @default(autoincrement())
+  area_atuacao String
+  endereco     String
+  urlFoto      String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Profissionais {
+  id             Int    @id @default(autoincrement())
+  nome           String
+  especialidades String
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  agenda Agenda[]
+}
+
+model Servicos {
+  id Int @id @default(autoincrement())
+
+  nome      String
+  descricao String
+  preco     Float
+  duracao   Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  horarios Horarios[]
+}
+
+model Agenda {
+  id              Int           @id @default(autoincrement())
+  profissionaisId Int
+  profissional    Profissionais @relation(fields: [profissionaisId], references: [id])
+
+  data   DateTime
+  inicio DateTime
+  fim    DateTime
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  horarios Horarios[]
+
+  @@unique([profissionaisId, data])
+}
+
+model Horarios {
+  id       Int    @id @default(autoincrement())
+  agendaId Int
+  agenda   Agenda @relation(fields: [agendaId], references: [id])
+
+  hora DateTime
+
+  status StatusHorario @default(LIVRE)
+
+  cliente   Clientes? @relation(fields: [clienteId], references: [id])
+  clienteId Int?
+
+  servico   Servicos? @relation(fields: [servicoId], references: [id])
+  servicoId Int?
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+}
+
+model Clientes {
+  id       Int    @id @default(autoincrement())
+  nome     String
+  email    String
+  telefone String @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  agendamentos Horarios[]
+}
+
+enum StatusHorario {
+  LIVRE
+  OCUPADO
+  BLOQUEADO
+}
+
 // migration dev: npx prisma migrate dev --schema=prisma/tenant/schema.tenant.prisma --config=./prisma/tenant/prisma.config.ts
 // generate: npx prisma generate --schema=prisma/tenant/schema.tenant.prisma
 // reset: npx prisma migrate reset --schema=prisma/tenant/schema.tenant.prisma
