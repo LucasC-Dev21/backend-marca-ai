@@ -1,0 +1,42 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../../db/prisma/clients/master/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  // url      = env("MASTER_DATABASE_URL")
+}
+
+model Tenants {
+  tenantId String  @id @default(uuid())
+  cnpj     String  @unique
+  email    String  @unique
+  sufixo   String  @unique
+  dbName   String  @unique
+  slug     String  @unique
+  ativo    Boolean @default(true)
+
+  usuarios_redirect Usuarios_Redirect[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
+
+model Usuarios_Redirect {
+  userId Int    @id @default(autoincrement())
+  email  String @unique
+
+  dbName String
+
+  tenantId String
+  tenant   Tenants @relation(fields: [tenantId], references: [tenantId])
+  slug     String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
+
+// migration dev: npx prisma migrate dev --schema=prisma/master/schema.master.prisma --name init --config=./prisma/master/prisma.config.ts
+// generate: npx prisma generate --schema=prisma/master/schema.master.prisma
+// reset: npx prisma migrate reset --schema=prisma/master/schema.master.prisma

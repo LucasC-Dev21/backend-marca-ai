@@ -1,0 +1,12 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../../db/prisma/clients/tenant/client"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// migration dev: npx prisma migrate dev --schema=prisma/tenant/schema.tenant.prisma --config=./prisma/tenant/prisma.config.ts
+// generate: npx prisma generate --schema=prisma/tenant/schema.tenant.prisma
+// reset: npx prisma migrate reset --schema=prisma/tenant/schema.tenant.prisma
