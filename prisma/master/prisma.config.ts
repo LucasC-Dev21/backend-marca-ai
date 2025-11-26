@@ -2,9 +2,9 @@ import 'dotenv/config';
 import { defineConfig, env } from 'prisma/config';
 
 export default defineConfig({
-  schema: '../../prisma/master/schema.master.prisma',
+  schema: './schema.master.prisma',
   migrations: {
-    path: '../../prisma/master/migrations',
+    path: './migrations',
   },
   datasource: {
     url: env('MASTER_DATABASE_URL'),
