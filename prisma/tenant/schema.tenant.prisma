@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
   output   = "../../db/prisma/clients/tenant/client"
 }
 
@@ -98,6 +98,6 @@ enum StatusHorario {
   BLOQUEADO
 }
 
-// migration dev: npx prisma migrate dev --schema=prisma/tenant/schema.tenant.prisma --config=./prisma/tenant/prisma.config.ts
+// migration dev: npx prisma migrate dev --schema=prisma/tenant/schema.tenant.prisma --name init --config=./prisma/tenant/prisma.config.ts
 // generate: npx prisma generate --schema=prisma/tenant/schema.tenant.prisma
 // reset: npx prisma migrate reset --schema=prisma/tenant/schema.tenant.prisma

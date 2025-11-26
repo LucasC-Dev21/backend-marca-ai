@@ -12,5 +12,6 @@
   "[prisma]": {
     "editor.formatOnSaveMode": "file",
     "editor.defaultFormatter": "Prisma.prisma"
-  }
+  },
+  "prisma.pinToPrisma6": false
 }

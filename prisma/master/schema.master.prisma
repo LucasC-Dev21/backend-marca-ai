@@ -1,11 +1,10 @@
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
   output   = "../../db/prisma/clients/master/client"
 }
 
 datasource db {
   provider = "postgresql"
-  // url      = env("MASTER_DATABASE_URL")
 }
 
 model Tenants {
