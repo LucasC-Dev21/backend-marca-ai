@@ -7,6 +7,7 @@ import { join } from 'path';
 import redisConfig from 'src/config/redis.config';
 import { RedisModule } from 'src/infra/redis/redis.module';
 import { PrismaModule } from 'src/common/prisma/prisma.module';
+import smtpConfig from 'src/config/smtp.config';
 
 @Module({
   imports: [
@@ -16,7 +17,7 @@ import { PrismaModule } from 'src/common/prisma/prisma.module';
         join(__dirname, '..', '..', '.env'),
         join(__dirname, '..', '..', '.cookies.env'),
       ],
-      load: [databaseConfig, redisConfig],
+      load: [databaseConfig, redisConfig, smtpConfig],
     }),
     PrismaModule,
     RedisModule,
