@@ -12,5 +12,6 @@ module.exports = {
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'], // ← correção aqui
   moduleNameMapper: {
     '^db/(.*)$': '<rootDir>/db/$1',
+    '^src/(.*)$': '<rootDir>/src/$1',
   },
 };
