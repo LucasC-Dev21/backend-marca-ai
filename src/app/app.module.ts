@@ -4,6 +4,9 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import databaseConfig from 'src/config/database.config';
 import { join } from 'path';
+import redisConfig from 'src/config/redis.config';
+import { RedisModule } from 'src/infra/redis/redis.module';
+import { PrismaModule } from 'src/common/prisma/prisma.module';
 
 @Module({
   imports: [
@@ -13,8 +16,10 @@ import { join } from 'path';
         join(__dirname, '..', '..', '.env'),
         join(__dirname, '..', '..', '.cookies.env'),
       ],
-      load: [databaseConfig],
+      load: [databaseConfig, redisConfig],
     }),
+    PrismaModule,
+    RedisModule,
   ],
   controllers: [AppController],
   providers: [AppService],
