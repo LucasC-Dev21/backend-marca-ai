@@ -22,5 +22,5 @@
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false
   },
-  "include": ["src/**/*.ts", "src/shared/types/**/*.d.ts", "prisma/**/*.ts"]
+  "include": ["src/**/*.ts", "src/shared/types/**/*.d.ts"]
 }
