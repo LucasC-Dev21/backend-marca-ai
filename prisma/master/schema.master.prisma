@@ -8,18 +8,21 @@ datasource db {
 }
 
 model Tenants {
-  tenantId String  @id @default(uuid())
-  cnpj     String  @unique
-  email    String  @unique
-  telefone String?
-  dbName   String  @unique
-  slug     String  @unique
-  ativo    Boolean @default(true)
+  tenantId    String  @id @default(uuid())
+  nomeEmpresa String
+  cnpj        String  @unique
+  telefone    String?
+  dbName      String  @unique
+  slug        String? @unique
+  ativo       Boolean @default(true)
+  email       String  @unique
+  senha       String
 
   clientes_redirect Clientes_Redirect[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now())
+  sessoes   Sessoes[]
 }
 
 model Clientes_Redirect {
@@ -30,10 +33,28 @@ model Clientes_Redirect {
 
   tenantId String
   tenant   Tenants @relation(fields: [tenantId], references: [tenantId])
-  slug     String
+  slug     String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
+}
+
+model Sessoes {
+  id           String    @id @default(uuid())
+  token        String    @unique
+  refreshToken String    @unique
+  criadoEm     DateTime  @default(now())
+  encerradoEm  DateTime?
+  expiraEm     DateTime
+  ativo        Boolean   @default(true)
+  ip           String?
+  userAgent    String?
+  ultimoAcesso DateTime?
+  revogadoPor  String?
+  tenant       Tenants   @relation(fields: [tenantId], references: [tenantId], onDelete: Cascade)
+  tenantId     String
+
+  @@index([tenantId, ativo])
 }
 
 // migration dev: npx prisma migrate dev --schema=prisma/master/schema.master.prisma --name init --config=./prisma/master/prisma.config.ts
